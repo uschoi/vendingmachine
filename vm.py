@@ -1,6 +1,8 @@
 class VendingMachine:
     def __init__(self):
         self._change = 0
+
+
     def run(self, raw):
 
         tokens = raw.split(" ")
@@ -14,5 +16,22 @@ class VendingMachine:
             self._change += int(coin)
             return coin + "원을 넣었습니다."
 
+        elif cmd == "음료":
+            price = 150
+            beverage = params[0]
+            if beverage != "커피":
+                return "알 수 없는 음료입니다."
+            if self._change < price:
+                return "잔액이 부족합니다."
+            self._change = self._change - price
+            return beverage + "가 나왔습니다."
+
         else:
             return "알 수 없는 명령입니다."
+
+
+
+
+
+#  잔액을 반환하게 만들기
+#  음료 커피를 누르면 돈이 부족하다거나, 음료와함께 잔액을 반환하며 잔액을 표시
