@@ -7,8 +7,6 @@ class VendingMachine:
 
         tokens = raw.split(" ")
         cmd, params = tokens[0], tokens[1:]
-        coins = [500, 100, 50, 10]
-        moim = []
         i = 0
         if cmd == "잔액":
             return "잔액은 " + str(self._change) + "원입니다."
@@ -35,27 +33,24 @@ class VendingMachine:
             return "가격은 " + str(price) + "원입니다."
 
         elif cmd == "반환":
-                self._change = params[0]
-                while self._change != 0:
-                    i = 0
-                    if self._change >= coins[i]:
-                            self._change = self._change - coins[i]
-                            return moim.append(coins[i])
-                    elif self._change >= coins[i + 1]:
-                            self._change = self._change - coins[i + 1]
-                            return moim.append(coins[i+1])
-                    elif self._change >= coins[i + 2]:
-                            self._change = self._change - coins[i + 2]
-                            return moim.append(coins[i+2])
-                    elif self._change >= coins[i + 3]:
-                            self._change = self._change - coins[i + 3]
-                            return moim.append(coins[i+3])
-                    elif self._change >= coins[i + 4]:
-                            self._change = self._change - coins[i + 4]
-                            return moim.append(coins[i+4])
-                    moim2 = ['%d원' % x for x in moim ]
-                    print ("잔액은:" + moim2 + "입니다.")
-                return "잔액이 0원입니다."
+            self._change = int(params[0])
+            coins = [ 500, 100, 50, 10 ]
+            coin_numbers = []
+            while self._change != 0:
+                num500 = self._change // 500
+                self._change -= num500 * 500
+                coin_numbers.append(num500)
+                num100 = self._change // 100
+                self._change -= num100 * 100
+                coin_numbers.append(num100)
+                num50 = self._change // 50
+                self._change -= num50 * 50
+                coin_numbers.append(num50)
+                num10 = self._change // 10
+                self._change -= num10 * 10
+                coin_numbers.append(num10)
+                print("잔액은:" + ",".join([str(coin) + "원" for coin in coin_numbers]) + "입니다.")
+            return "잔액이 0원입니다."
         else:
             return "알 수 없는 명령입니다."
 
