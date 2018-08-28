@@ -19,14 +19,21 @@ class VendingMachine:
             return coin + "원을 넣었습니다."
 
         elif cmd == "음료":
-            price = 150
             beverage = params[0]
-            if beverage != "커피":
+            known_beverage = {
+                "커피": 150,
+                "우유": 200,
+                "밀크커피": 300,
+            }
+
+            if beverage not in known_beverage:
                 return "알 수 없는 음료입니다."
+            price = known_beverage[beverage]
             if self._change < price:
                 return "잔액이 부족합니다."
             self._change = self._change - price
-            return beverage + "가 나왔습니다."
+            return "가격은 " + str(price) + "원입니다."
+
         elif cmd == "반환":
                 self._change = params[0]
                 while self._change != 0:
@@ -47,7 +54,7 @@ class VendingMachine:
                             self._change = self._change - coins[i + 4]
                             return moim.append(coins[i+4])
                     moim2 = ['%d원' % x for x in moim ]
-                    print ("잔액은:" + moim2 + "입니다.") 
+                    print ("잔액은:" + moim2 + "입니다.")
                 return "잔액이 0원입니다."
         else:
             return "알 수 없는 명령입니다."

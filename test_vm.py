@@ -24,12 +24,6 @@ def test_unknown_cmd():
     m = VendingMachine()
     assert "알 수 없는 명령입니다." == m.run("aw")
 
-def test_음료_뽑기():
-    m = VendingMachine()
-    m.run("동전 500")
-    assert "커피가 나왔습니다." == m.run("음료 커피")
-    assert "잔액은 350원입니다." == m.run("잔액")
-
 def test_모르는음료_뽑기():
     m = VendingMachine()
     m.run("동전 500")
@@ -41,6 +35,13 @@ def test_동전부족_음료뽑기():
     m.run("동전 100")
     assert "잔액이 부족합니다." == m.run("음료 커피")
     assert "잔액은 100원입니다." == m.run("잔액")
+
+def test_음료별_가격확인():
+    m = VendingMachine()
+    m.run("동전 500")
+    assert "가격은 300원입니다." == m.run("음료 밀크커피")
+
+
 
 def test_특정액수_반환명령():
     m = VendingMachine()
