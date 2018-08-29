@@ -2,20 +2,16 @@ class VendingMachine:
     def __init__(self):
         self._change = 0
 
-
     def run(self, raw):
-
         tokens = raw.split(" ")
         cmd, params = tokens[0], tokens[1:]
         i = 0
         if cmd == "잔액":
             return "잔액은 " + str(self._change) + "원입니다."
-
         elif cmd == "동전":
             coin = params[0]
             self._change += int(coin)
             return coin + "원을 넣었습니다."
-
         elif cmd == "음료":
             beverage = params[0]
             known_beverage = {
@@ -33,24 +29,20 @@ class VendingMachine:
             return "가격은 " + str(price) + "원입니다."
 
         elif cmd == "반환":
-            self._change = int(params[0])
-            coins = [ 500, 100, 50, 10 ]
-            coin_numbers = []
-            while self._change != 0:
-                num500 = self._change // 500
-                self._change -= num500 * 500
-                coin_numbers.append(num500)
-                num100 = self._change // 100
-                self._change -= num100 * 100
-                coin_numbers.append(num100)
-                num50 = self._change // 50
-                self._change -= num50 * 50
-                coin_numbers.append(num50)
-                num10 = self._change // 10
-                self._change -= num10 * 10
-                coin_numbers.append(num10)
-                print("잔액은:" + ",".join([str(coin) + "원" for coin in coin_numbers]) + "입니다.")
-            return "잔액이 0원입니다."
+            if self._change == 0:
+                return "잔액이 0원입니다."
+
+            coins = [500, 100, 50, 10]  # no space after,be4 bracket
+            coin_counts = []
+            for coin in coins:
+                n = self._change // coin  # sequential processing
+                self._change -= n * coin
+                coin_counts.append(n)
+
+            coins_to_return = []
+            for coin, coin_count in zip(coins, coin_counts):
+                coins_to_return += [str(coin) + "원"] * coin_count
+            return "잔액은:" + ", ".join(coins_to_return) + "입니다."
         else:
             return "알 수 없는 명령입니다."
 
